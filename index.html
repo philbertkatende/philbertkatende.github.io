@@ -5,7 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Professional portfolio of Katende Philbert — pharmacist, quality and regulatory enthusiast, entrepreneur and technology learner.">
   <meta name="theme-color" content="#0b1220">
-  <title>Katende Philbert | Pharmacist & Professional Portfolio</title>
+  <meta name="author" content="Katende Philbert">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://philbertkatende.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.svg">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Katende Philbert | Pharmacist, Quality & Digital Professional">
+  <meta property="og:description" content="Professional portfolio of Katende Philbert, pharmacist with experience in hospital pharmacy, pharmaceutical quality and business, and interests in technology.">
+  <meta property="og:url" content="https://philbertkatende.github.io/">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/238915353?v=4">
+  <meta property="og:site_name" content="Katende Philbert">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Katende Philbert | Pharmacist, Quality & Digital Professional">
+  <meta name="twitter:description" content="Professional portfolio of Katende Philbert.">
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/238915353?v=4">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfilePage",
+    "name":"Katende Philbert | Pharmacist & Professional Portfolio",
+    "url":"https://philbertkatende.github.io/",
+    "mainEntity":{
+      "@type":"Person",
+      "@id":"https://philbertkatende.github.io/#katende-philbert",
+      "name":"Katende Philbert",
+      "jobTitle":"Pharmacist",
+      "description":"Pharmacist with experience in hospital pharmacy and pharmaceutical quality-control environments, with interests in technology and entrepreneurship.",
+      "image":"https://avatars.githubusercontent.com/u/238915353?v=4",
+      "email":"mailto:philbertkatende115@gmail.com",
+      "telephone":"+256708165731",
+      "url":"https://philbertkatende.github.io/",
+      "sameAs":[
+        "https://github.com/philbertkatende"
+      ],
+      "alumniOf":{
+        "@type":"CollegeOrUniversity",
+        "name":"Kampala International University"
+      }
+    }
+  }
+  </script>
+  <title>Katende Philbert | Pharmacist, Quality & Digital Professional</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,6 +60,7 @@
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
+      <a href="#tools">Pharmacy tools</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -32,7 +74,7 @@
         <p class="lead">I am Katende Philbert, a pharmacist with practical experience across hospital pharmacy and pharmaceutical quality-control environments, alongside a long-standing interest in business and technology.</p>
         <div class="hero-actions">
           <a class="button primary" href="#experience">Explore my work</a>
-          <a class="button secondary" href="#contact">Get in touch</a>
+          <a class="button secondary" href="#tools">Open pharmacy tools</a>
         </div>
         <div class="quick-facts">
           <div><strong>B.Pharm</strong><span>Kampala International University</span></div>
@@ -119,9 +161,73 @@
       </div>
     </section>
 
+    <section id="tools" class="section tools-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">04 — PHARMACY TOOLS</p>
+        <h2>Practical calculators and medicine-safety utilities.</h2>
+        <p class="section-intro">A growing collection of lightweight tools for pharmacists, students and healthcare professionals. They are educational aids—not substitutes for clinical judgment, current references or patient-specific prescribing decisions.</p>
+      </div>
+
+      <div class="tools-grid">
+        <article class="tool-card reveal">
+          <div class="tool-head"><span class="tool-icon">CrCl</span><div><h3>Creatinine clearance</h3><p>Cockcroft–Gault estimate</p></div></div>
+          <div class="tool-fields two">
+            <label>Age (years)<input id="crcl-age" type="number" min="1" step="1" placeholder="e.g. 65"></label>
+            <label>Weight (kg)<input id="crcl-weight" type="number" min="1" step="0.1" placeholder="e.g. 70"></label>
+            <label>Serum creatinine (mg/dL)<input id="crcl-scr" type="number" min="0.1" step="0.01" placeholder="e.g. 1.2"></label>
+            <label>Sex<select id="crcl-sex"><option value="male">Male</option><option value="female">Female</option></select></label>
+          </div>
+          <button class="tool-button" id="crcl-calc">Calculate</button>
+          <div class="tool-result" id="crcl-result" aria-live="polite">Enter values to calculate an estimate.</div>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-head"><span class="tool-icon">BMI</span><div><h3>BMI calculator</h3><p>Weight and height</p></div></div>
+          <div class="tool-fields two">
+            <label>Weight (kg)<input id="bmi-weight" type="number" min="1" step="0.1" placeholder="e.g. 70"></label>
+            <label>Height (cm)<input id="bmi-height" type="number" min="30" step="0.1" placeholder="e.g. 170"></label>
+          </div>
+          <button class="tool-button" id="bmi-calc">Calculate</button>
+          <div class="tool-result" id="bmi-result" aria-live="polite">Enter weight and height.</div>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-head"><span class="tool-icon">IV</span><div><h3>Infusion rate</h3><p>Volume over time</p></div></div>
+          <div class="tool-fields two">
+            <label>Volume (mL)<input id="iv-volume" type="number" min="0" step="0.1" placeholder="e.g. 500"></label>
+            <label>Time (hours)<input id="iv-time" type="number" min="0.01" step="0.1" placeholder="e.g. 4"></label>
+          </div>
+          <button class="tool-button" id="iv-calc">Calculate</button>
+          <div class="tool-result" id="iv-result" aria-live="polite">Enter volume and time.</div>
+        </article>
+
+        <article class="tool-card reveal">
+          <div class="tool-head"><span class="tool-icon">D/V</span><div><h3>Dose → volume</h3><p>Liquid medicine calculation</p></div></div>
+          <div class="tool-fields two">
+            <label>Required dose (mg)<input id="dv-dose" type="number" min="0" step="0.1" placeholder="e.g. 250"></label>
+            <label>Available strength (mg)<input id="dv-strength" type="number" min="0.001" step="0.1" placeholder="e.g. 125"></label>
+            <label>Available volume (mL)<input id="dv-volume" type="number" min="0.001" step="0.1" placeholder="e.g. 5"></label>
+          </div>
+          <button class="tool-button" id="dv-calc">Calculate</button>
+          <div class="tool-result" id="dv-result" aria-live="polite">Enter dose, strength and volume.</div>
+        </article>
+
+        <article class="tool-card reveal wide-tool">
+          <div class="tool-head"><span class="tool-icon">DDI</span><div><h3>Quick interaction screen</h3><p>High-yield flags for common combinations</p></div></div>
+          <div class="tool-fields two">
+            <label>Medicine 1<input id="ddi-a" type="text" autocomplete="off" placeholder="e.g. warfarin"></label>
+            <label>Medicine 2<input id="ddi-b" type="text" autocomplete="off" placeholder="e.g. ibuprofen"></label>
+          </div>
+          <button class="tool-button" id="ddi-check">Check pair</button>
+          <div class="tool-result" id="ddi-result" aria-live="polite">This screen is intentionally limited and is not a comprehensive interaction database.</div>
+          <p class="tool-note">For complete interaction checking, use a current professional reference and review the patient's medicines, conditions and clinical context. NLM discontinued the RxNav drug–drug interaction API in January 2024; this site therefore does not pretend to provide a comprehensive automated DDI database. <a href="https://www.fda.gov/drugs/resources-drugs/drug-interactions-what-you-should-know" target="_blank" rel="noopener noreferrer">FDA interaction guidance ↗</a></p>
+        </article>
+      </div>
+      <p class="tool-attribution">Clinical safety note: calculations are mathematical estimates. Verify units, patient factors, reference equations and local guidelines before using a result in practice.</p>
+    </section>
     <section id="projects" class="section alt-section">
       <div class="section-heading reveal">
-        <p class="eyebrow">04 — PROJECTS & DIRECTION</p>
+        <p class="eyebrow">05 — PROJECTS & DIRECTION</p>
         <h2>Turning learning into visible work.</h2>
       </div>
       <div class="project-grid">
@@ -156,11 +262,16 @@
     <section id="contact" class="section contact-section">
       <div class="contact-card reveal">
         <div>
-          <p class="eyebrow">05 — CONTACT</p>
+          <p class="eyebrow">06 — CONTACT</p>
           <h2>Let's connect.</h2>
-          <p>For professional opportunities, collaborations or conversations around pharmacy, quality, technology and business, you can reach me through GitHub.</p>
+          <p>For professional opportunities, collaborations or conversations around pharmacy, quality, technology and business, contact me directly.</p>
+          <div class="contact-links">
+            <a href="mailto:philbertkatende115@gmail.com">✉ philbertkatende115@gmail.com</a>
+            <a href="https://wa.me/256708165731" target="_blank" rel="noopener noreferrer">◉ WhatsApp: +256 708 165 731</a>
+            <a href="https://github.com/philbertkatende" target="_blank" rel="noopener noreferrer">↗ GitHub profile</a>
+          </div>
         </div>
-        <a class="button primary" href="https://github.com/philbertkatende" target="_blank" rel="noopener noreferrer">View GitHub profile ↗</a>
+        <a class="button primary" href="mailto:philbertkatende115@gmail.com">Email me ↗</a>
       </div>
     </section>
   </main>
