@@ -1,5 +1,6 @@
 (() => {
   const $ = id => document.getElementById(id);
+  const API_BASE = location.hostname.endsWith("github.io") ? "https://philbertkatendegithubio.vercel.app" : "";
   const params = new URLSearchParams(location.search);
   const txRef = params.get("tx_ref") || sessionStorage.getItem("kp_tx_ref") || "";
   const transactionId = params.get("transaction_id") || "";
@@ -18,11 +19,11 @@
     if (!txRef) return show("Reference not found", "We could not identify this payment. Please contact me if money was deducted.");
     try {
       if (status === "successful" && transactionId) {
-        const verify = await fetch("/api/verify-payment?tx_ref=" + encodeURIComponent(txRef) + "&transaction_id=" + encodeURIComponent(transactionId));
+        const verify = await fetch(API_BASE + "/api/verify-payment?tx_ref=" + encodeURIComponent(txRef) + "&transaction_id=" + encodeURIComponent(transactionId));
         const result = await verify.json();
         if (!verify.ok) throw new Error(result.error || "The provider has not confirmed this payment.");
       }
-      const response = await fetch("/api/payment-status?tx_ref=" + encodeURIComponent(txRef));
+      const response = await fetch(API_BASE + "/api/payment-status?tx_ref=" + encodeURIComponent(txRef));
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Unable to retrieve payment status.");
       if (data.status === "successful") {
