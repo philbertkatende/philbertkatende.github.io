@@ -20,8 +20,9 @@
     $("currency").disabled = false;
     const service = selectedService();
     const price = service && (currency === "UGX" ? service.price_ugx : service.price_usd);
-    $("price-summary").innerHTML = '<span>Amount due</span><strong>' + (price == null ? "Ask for a quote" : money(price, currency)) + '</strong>';
+    $("price-summary").innerHTML = '<span>Pricing</span><strong>' + (price == null ? "Custom quote · No fixed public price" : money(price, currency)) + '</strong>';
     $("service-description").textContent = service ? service.description : "";
+    $("pay-button").textContent = service && price == null ? "Request a quote" : "Continue to secure checkout";
   };
   const loadServices = async () => {
     try {
@@ -29,8 +30,12 @@
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Unable to load services.");
       state.services = data.services || [];
-      $("service-select").innerHTML = '<option value="">Select a service</option>' + state.services.map(s =>
-        '<option value="' + s.id + '">' + s.name.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])) + '</option>'
+      const categories = [...new Set(state.services.map(s => s.category || "Professional Services"))];
+      $("service-select").innerHTML = '<option value="">Select a service</option>' + categories.map(category =>
+        '<optgroup label="' + category.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])) + '">' +
+        state.services.filter(s => (s.category || "Professional Services") === category).map(s =>
+          '<option value="' + s.id + '">' + s.name.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])) + '</option>'
+        ).join("") + '</optgroup>'
       ).join("");
       renderPrice();
     } catch (error) {
@@ -73,8 +78,23 @@
     if (state.mode === "service" && !service) return message("Select a service first.", "error");
     if (state.mode === "invoice" && !state.invoice) return message("Look up a valid invoice first.", "error");
     const currency = $("currency").value;
-    if (service && (currency === "UGX" ? service.price_ugx : service.price_usd) == null) return message("This service has no listed price in the selected currency. Please request a quote.", "error");
     const button = $("pay-button");
+    if (service && service.price_ugx == null && service.price_usd == null) {
+      const subject = "Quote request: " + service.name;
+      const details = [
+        "Service: " + service.name,
+        "Name: " + $("full-name").value.trim(),
+        "Email: " + $("email").value.trim(),
+        "Phone: " + $("phone").value.trim(),
+        "Preferred currency: " + currency,
+        "",
+        "Project details:",
+        $("project-details").value.trim() || "Not provided yet."
+      ].join("\\n");
+      window.location.href = "mailto:philbertkatende115@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(details);
+      message("Your email app should open with a prepared quote request. Review it and send to submit your enquiry.", "success");
+      return;
+    }
     button.disabled = true;
     button.textContent = "Preparing secure checkout…";
     message("");
