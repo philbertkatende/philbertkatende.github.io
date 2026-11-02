@@ -19,7 +19,7 @@
     <div class="payment-intro">
       <p class="eyebrow">SERVICES & PAYMENTS</p>
       <h1>Work together.<br><span>Pay securely.</span></h1>
-      <p>Choose a listed service or pay an invoice using its reference. Prices are shown in the selected currency. Payment processing will be enabled after merchant onboarding and sandbox testing.</p>
+      <p>Choose a listed service or pay an invoice using its reference. Most services are quoted individually after the scope is reviewed. Existing invoices can be paid securely; online checkout will be enabled after merchant onboarding and sandbox testing.</p>
     </div>
     <section class="payment-card">
       <div class="payment-tabs" role="tablist" aria-label="Payment type">
@@ -43,6 +43,8 @@
           <div><label class="field-label" for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+256…"></div>
           <div><label class="field-label" for="currency">Currency</label><select id="currency" required><option value="UGX">UGX — Uganda shillings</option><option value="USD">USD — US dollars</option></select></div>
         </div>
+        <label class="field-label" for="project-details">Project details <span class="field-hint">(optional; helpful for a quote)</span></label>
+        <textarea id="project-details" rows="4" maxlength="3000" placeholder="Briefly describe what you need, the expected deliverables and any deadline."></textarea>
         <div id="price-summary" class="price-summary"><span>Amount due</span><strong>Select a service</strong></div>
         <p class="field-hint">Card and supported mobile-money options are displayed by the payment provider at checkout. Never share your card PIN or one-time password with anyone.</p>
         <button class="button primary checkout-button" id="pay-button" type="submit">Continue to secure checkout</button>
