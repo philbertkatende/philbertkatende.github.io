@@ -2,17 +2,22 @@
 
 Live website: https://philbertkatende.github.io/
 
-A responsive, accessible, static professional portfolio for Katende Philbert, a Ugandan B.Pharm graduate and Pharmaceutical Society of Uganda member.
+A responsive, accessible, static professional portfolio for Katende Philbert, a Ugandan pharmacist and Pharmaceutical Society of Uganda member.
 
 ## Sections
 
 - Professional introduction and biography
 - Hospital pharmacy and pharmaceutical quality experience
 - Skills and pharmacy calculation / medicine-safety tools
+- Professional services catalogue covering regulatory documentation, pharmaceutical quality and safety, research and scientific communication, and digital/professional support
 - Projects and digital learning
 - Research and publication record
 - Education, training and leadership
 - Contact information
+
+## Professional services
+
+The portfolio presents 12 services in four categories. Engagement scope, deliverables, timelines and fees are discussed and agreed directly with prospective clients. The website does not process payments; payment arrangements are made directly after negotiation.
 
 ## Research publication
 
