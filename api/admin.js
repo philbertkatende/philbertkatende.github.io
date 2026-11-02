@@ -42,16 +42,19 @@ module.exports = async function handler(req, res) {
     if (req.method === "POST" && input.action === "create_service") {
       const name = String(input.name || "").trim().slice(0, 120);
       const description = String(input.description || "").trim().slice(0, 1000);
-      const priceUgx = input.price_ugx === "" || input.price_ugx === null ? null : Number(input.price_ugx);
-      const priceUsd = input.price_usd === "" || input.price_usd === null ? null : Number(input.price_usd);
-      if (!name || ((priceUgx === null || !validAmount(priceUgx)) && (priceUsd === null || !validAmount(priceUsd)))) {
-        return json(res, 400, { error: "Provide a service name and at least one valid currency price." });
+      const category = String(input.category || "Professional Services").trim().slice(0, 100);
+      const priceUgx = input.price_ugx === "" || input.price_ugx === null || input.price_ugx === undefined ? null : Number(input.price_ugx);
+      const priceUsd = input.price_usd === "" || input.price_usd === null || input.price_usd === undefined ? null : Number(input.price_usd);
+      if (!name || !category ||
+          (priceUgx !== null && !validAmount(priceUgx)) ||
+          (priceUsd !== null && !validAmount(priceUsd))) {
+        return json(res, 400, { error: "Provide a service name and valid optional prices." });
       }
       const baseSlug = slugify(name);
       const slug = baseSlug + "-" + Math.random().toString(36).slice(2, 7);
       const rows = await db("services", {
         method: "POST", prefer: "return=representation",
-        body: { name, description, slug, price_ugx: priceUgx, price_usd: priceUsd, active: true }
+        body: { name, category, description, slug, price_ugx: priceUgx, price_usd: priceUsd, active: true }
       });
       json(res, 201, { service: rows[0] });
       return;
