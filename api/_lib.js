@@ -164,41 +164,66 @@ async function finalizePayment(transaction) {
   const rows = await db("payments?tx_ref=eq." + encodeURIComponent(txRef) + "&select=id,tx_ref,amount,currency,status,invoice_id,service_id&limit=1");
   const payment = Array.isArray(rows) ? rows[0] : null;
   if (!payment) throw new Error("No matching payment record was found.");
-  if (transaction.status !== "successful" ||
-      String(transaction.currency || "").toUpperCase() !== payment.currency ||
+  if (String(transaction.currency || "").toUpperCase() !== payment.currency ||
       !txAmountMatches(transaction.amount, payment.amount)) {
-    throw new Error("Verified payment details do not match the expected amount, currency or status.");
+    throw new Error("Verified payment details do not match the expected amount or currency.");
   }
-  const safeResponse = {
-    id: transaction.id,
-    tx_ref: transaction.tx_ref,
-    flw_ref: transaction.flw_ref || null,
-    status: transaction.status,
-    amount: transaction.amount,
-    charged_amount: transaction.charged_amount || null,
-    currency: transaction.currency,
-    payment_type: transaction.payment_type || null
-  };
-  await db("rpc/confirm_payment", {
-    method: "POST",
-    body: {
-      p_tx_ref: txRef,
-      p_provider_transaction_id: String(transaction.id),
-      p_provider_response: safeResponse,
-      p_payment_type: transaction.payment_type || null
+
+  const providerStatus = String(transaction.status || "").toLowerCase();
+  if (providerStatus === "successful") {
+    if (payment.status !== "successful") {
+      const safeResponse = {
+        id: transaction.id,
+        tx_ref: transaction.tx_ref,
+        flw_ref: transaction.flw_ref || null,
+        status: transaction.status,
+        amount: transaction.amount,
+        charged_amount: transaction.charged_amount || null,
+        currency: transaction.currency,
+        payment_type: transaction.payment_type || null
+      };
+      await db("rpc/confirm_payment", {
+        method: "POST",
+        body: {
+          p_tx_ref: txRef,
+          p_provider_transaction_id: String(transaction.id),
+          p_provider_response: safeResponse,
+          p_payment_type: transaction.payment_type || null
+        }
+      });
     }
-  });
+  } else if (providerStatus === "failed" || providerStatus === "cancelled") {
+    if (payment.status !== "successful") {
+      await db("payments?tx_ref=eq." + encodeURIComponent(txRef), {
+        method: "PATCH",
+        body: {
+          status: providerStatus,
+          provider_transaction_id: String(transaction.id),
+          updated_at: new Date().toISOString()
+        }
+      });
+    }
+  } else {
+    if (payment.status !== "successful") {
+      await db("payments?tx_ref=eq." + encodeURIComponent(txRef), {
+        method: "PATCH",
+        body: { status: "pending", updated_at: new Date().toISOString() }
+      });
+    }
+  }
+
+  const eventStatus = providerStatus || "unknown";
   await db("payment_events?on_conflict=payment_id,provider_transaction_id,event_type", {
     method: "POST",
     prefer: "resolution=ignore-duplicates,return=minimal",
     body: [{
       payment_id: payment.id,
       provider_transaction_id: String(transaction.id),
-      event_type: "charge.completed",
-      event_status: "successful"
+      event_type: "charge.completed:" + eventStatus,
+      event_status: eventStatus
     }]
   });
-  return { tx_ref: txRef, status: "successful" };
+  return { tx_ref: txRef, status: providerStatus === "successful" ? "successful" : (providerStatus === "failed" || providerStatus === "cancelled" ? providerStatus : "pending") };
 }
 
 function errorResponse(res, error) {
