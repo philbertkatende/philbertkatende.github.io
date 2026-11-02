@@ -1,5 +1,6 @@
 (() => {
   const $ = id => document.getElementById(id);
+  const API_BASE = location.hostname.endsWith("github.io") ? "https://philbertkatendegithubio.vercel.app" : "";
   let accessToken = sessionStorage.getItem("kp_admin_token") || "";
   let adminEmail = sessionStorage.getItem("kp_admin_email") || "";
   const api = async (path, options = {}) => {
