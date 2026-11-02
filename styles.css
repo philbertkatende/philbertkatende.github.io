@@ -118,3 +118,33 @@ a{color:inherit;text-decoration:none}
 .service-payment-note{grid-column:1/-1;font-size:11px!important;color:#91a4c1!important;border-top:1px solid #293851;padding-top:13px;margin-top:5px!important}
 @media(max-width:850px){.services-grid{grid-template-columns:1fr}.services-contact{grid-template-columns:1fr}.service-payment-note{grid-column:auto}}
 @media(max-width:560px){.services-section{padding-left:20px;padding-right:20px}.service-category-heading h3{font-size:19px}.services-actions{flex-direction:column}.services-actions .button{width:100%}}
+
+/* Services catalogue — card-based responsive layout */
+.services-section{background:#f4f7fb;max-width:none;padding-left:max(24px,calc((100% - var(--max))/2));padding-right:max(24px,calc((100% - var(--max))/2))}
+.services-section .section-heading{margin-bottom:48px}
+.service-category-block{margin:0 0 48px}
+.service-category-heading{display:flex;align-items:center;gap:15px;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid #dfe6f0}
+.service-category-heading>span{flex:0 0 44px;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#e5edff;color:#245ed1;font-size:13px;font-weight:850}
+.service-category-heading h3{font-size:clamp(19px,2.2vw,24px);line-height:1.2;letter-spacing:-.03em}
+.service-category-kicker{font-size:9px!important;letter-spacing:.16em;font-weight:850;color:#5274ad!important;margin:0 0 4px!important}
+.services-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.service-card{min-width:0;min-height:190px;padding:21px 22px 23px;border:1px solid #e0e7f0;border-radius:17px;background:#fff;display:flex;flex-direction:column;gap:13px;box-shadow:0 5px 18px rgba(20,42,75,.035);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.service-card:hover{transform:translateY(-4px);border-color:#b9ccef;box-shadow:0 14px 30px rgba(20,42,75,.09)}
+.service-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.service-index{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#edf3ff;color:#2f6fed;font-size:11px;font-weight:850}
+.service-label{font-size:8px;letter-spacing:.12em;font-weight:800;color:#8996a9}
+.service-card h4{font-size:16px;line-height:1.3;letter-spacing:-.02em;color:#152238}
+.service-card p{font-size:12px;line-height:1.6;color:#68778c;margin-top:auto}
+.services-contact{margin-top:58px;padding:clamp(25px,4vw,38px);border-radius:22px;background:linear-gradient(120deg,#101c31,#1a3153);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:25px;box-shadow:0 16px 35px rgba(12,28,52,.16)}
+.services-contact-copy{max-width:620px}
+.services-contact h3{font-size:clamp(23px,3vw,30px);letter-spacing:-.035em;line-height:1.15}
+.services-contact p:not(.service-category-kicker){font-size:13px;line-height:1.6;color:#c0cde0;margin-top:9px}
+.services-contact .service-category-kicker{color:#9db9ed!important}
+.call-button{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-width:205px;padding:14px 20px;border-radius:13px;background:#16a36a;color:#fff;box-shadow:0 8px 20px rgba(22,163,106,.25);transition:transform .2s ease,background .2s ease}
+.call-button:hover{background:#118657;transform:translateY(-2px)}
+.call-button-icon{font-size:23px;line-height:1}
+.call-button strong,.call-button small{display:block}
+.call-button strong{font-size:14px;line-height:1.3}
+.call-button small{font-size:11px;opacity:.9;margin-top:2px}
+@media(max-width:1000px){.services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.services-section{padding-left:20px;padding-right:20px}.services-grid{grid-template-columns:1fr;gap:12px}.service-card{min-height:unset;padding:19px}.service-category-block{margin-bottom:38px}.services-contact{align-items:stretch;flex-direction:column}.call-button{width:100%}.service-category-heading h3{font-size:19px}}
