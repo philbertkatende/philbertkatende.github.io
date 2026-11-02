@@ -1,5 +1,6 @@
 (() => {
   const $ = id => document.getElementById(id);
+  const API_BASE = location.hostname.endsWith("github.io") ? "https://philbertkatendegithubio.vercel.app" : "";
   const form = $("checkout-form");
   if (!form) return;
   const state = { mode: "service", services: [], invoice: null };
@@ -24,7 +25,7 @@
   };
   const loadServices = async () => {
     try {
-      const response = await fetch("/api/services");
+      const response = await fetch(API_BASE + "/api/services");
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Unable to load services.");
       state.services = data.services || [];
@@ -53,7 +54,7 @@
     if (!code) return;
     $("invoice-preview").textContent = "Looking up invoice…";
     try {
-      const response = await fetch("/api/invoice-preview?invoice_code=" + encodeURIComponent(code));
+      const response = await fetch(API_BASE + "/api/invoice-preview?invoice_code=" + encodeURIComponent(code));
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Invoice not found.");
       state.invoice = data.invoice;
@@ -86,7 +87,7 @@
         service_id: service ? service.id : undefined,
         invoice_code: state.mode === "invoice" ? state.invoice.invoice_code : undefined
       };
-      const response = await fetch("/api/checkout", {
+      const response = await fetch(API_BASE + "/api/checkout", {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
       });
       const data = await response.json();
