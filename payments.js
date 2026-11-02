@@ -15,12 +15,13 @@
         ? '<span>Amount due</span><strong>' + money(inv.amount, inv.currency) + '</strong>'
         : '<span>Amount due</span><strong>Find an invoice</strong>';
       $("currency").disabled = Boolean(inv);
+      $("pay-button").textContent = "Continue to secure checkout";
       return;
     }
     $("currency").disabled = false;
     const service = selectedService();
     const price = service && (currency === "UGX" ? service.price_ugx : service.price_usd);
-    $("price-summary").innerHTML = '<span>Pricing</span><strong>' + (price == null ? "Custom quote · No fixed public price" : money(price, currency)) + '</strong>';
+    $("price-summary").innerHTML = '<span>Pricing</span><strong>' + (!service ? "Select a service" : (price == null ? "Custom quote · No fixed public price" : money(price, currency))) + '</strong>';
     $("service-description").textContent = service ? service.description : "";
     $("pay-button").textContent = service && price == null ? "Request a quote" : "Continue to secure checkout";
   };
@@ -79,7 +80,7 @@
     if (state.mode === "invoice" && !state.invoice) return message("Look up a valid invoice first.", "error");
     const currency = $("currency").value;
     const button = $("pay-button");
-    if (service && service.price_ugx == null && service.price_usd == null) {
+    if (service && (currency === "UGX" ? service.price_ugx : service.price_usd) == null) {
       const subject = "Quote request: " + service.name;
       const details = [
         "Service: " + service.name,
