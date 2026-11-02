@@ -75,8 +75,8 @@
     renderPayments();
     $("services-list").innerHTML = data.services.length ? data.services.map(s =>
       '<div class="admin-list-item"><strong>' + escapeHtml(s.name) + '</strong><span>' +
-      (s.price_ugx ? money(s.price_ugx, "UGX") : "No UGX price") + " · " +
-      (s.price_usd ? money(s.price_usd, "USD") : "No USD price") + ' · ' + (s.active ? "Active" : "Inactive") +
+      escapeHtml(s.category || "Professional Services") + " · " +
+      (s.price_ugx == null && s.price_usd == null ? "Custom quote" : (s.price_ugx != null ? money(s.price_ugx, "UGX") : "—") + " · " + (s.price_usd != null ? money(s.price_usd, "USD") : "—")) + ' · ' + (s.active ? "Active" : "Inactive") +
       '</span><button data-service="' + s.id + '" data-active="' + (!s.active) + '">' + (s.active ? "Deactivate" : "Activate") + '</button></div>'
     ).join("") : '<p class="field-hint">No services configured.</p>';
     $("invoices-list").innerHTML = data.invoices.length ? data.invoices.map(i =>
