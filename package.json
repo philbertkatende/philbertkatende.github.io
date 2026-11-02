@@ -1,0 +1,27 @@
+{
+  "name": "philbertkatende-portfolio",
+  "version": "1.0.0",
+  "description": "Professional portfolio website of Katende Philbert - Ugandan Pharmacist, PSU Member & Researcher",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philbertkatende/philbertkatende.github.io.git"
+  },
+  "keywords": [
+    "portfolio",
+    "pharmacy",
+    "personal-website"
+  ],
+  "author": "Katende Philbert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philbertkatende/philbertkatende.github.io/issues"
+  },
+  "homepage": "https://philbertkatende.github.io/",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
