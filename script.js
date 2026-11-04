@@ -25,10 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const out = (id, html, kind="") => { const el=document.getElementById(id); if(el){el.innerHTML=html; el.className="tool-result"+(kind?" "+kind:"");} };
 
   document.getElementById("crcl-calc")?.addEventListener("click",()=>{
-    const age=val("crcl-age"), wt=val("crcl-weight"), scr=val("crcl-scr"), sex=document.getElementById("crcl-sex")?.value;
-    if(!(age>0&&wt>0&&scr>0)) return out("crcl-result","Please enter age, weight and serum creatinine.");
+    const age=val("crcl-age"), wt=val("crcl-weight"), scrEntered=val("crcl-scr"), sex=document.getElementById("crcl-sex")?.value;
+    const unit=document.getElementById("crcl-unit")?.value || "mgdl";
+    if(!(age>0&&age<120&&wt>0&&scrEntered>0)) return out("crcl-result","Enter a valid age, weight and serum creatinine greater than zero.");
+    const scr=unit==="umol" ? scrEntered/88.4 : scrEntered;
     let crcl=((140-age)*wt)/(72*scr); if(sex==="female") crcl*=0.85;
-    out("crcl-result",`Estimated CrCl: <strong>${crcl.toFixed(1)} mL/min</strong> &nbsp; <span>(Cockcroft–Gault)</span>`);
+    if(!Number.isFinite(crcl)||crcl<=0) return out("crcl-result","Unable to calculate a valid estimate. Check the entered values.");
+    out("crcl-result",`Estimated CrCl: <strong>${crcl.toFixed(1)} mL/min</strong> &nbsp; <span>(Cockcroft–Gault estimate)</span>`);
   });
 
   document.getElementById("bmi-calc")?.addEventListener("click",()=>{
